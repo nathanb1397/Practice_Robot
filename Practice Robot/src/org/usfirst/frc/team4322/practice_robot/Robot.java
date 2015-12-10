@@ -1,10 +1,6 @@
 
 package org.usfirst.frc.team4322.practice_robot;
 
-import org.usfirst.frc.team4322.recycleRush.CoPilotController;
-import org.usfirst.frc.team4322.recycleRush.RobotConfigFileReader;
-import org.usfirst.frc.team4322.recycleRush.RobotMap;
-
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
