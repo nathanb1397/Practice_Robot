@@ -19,9 +19,9 @@ public class Robot extends IterativeRobot {
      */
 	
 	private boolean disabledBegin = false;
-	private boolean autoBegin = false;
+	//private boolean autoBegin = false;
 	private boolean teleBegin = false;
-	private boolean testBegin = false;
+	//private boolean testBegin = false;
 	private boolean resetPressed = false;
 	private boolean matchRecord = false;
 	
