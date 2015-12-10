@@ -18,6 +18,7 @@ public class RobotMap {
 	// Set Joystick Ports for Drive Station
 	public static int PILOT = 0;
 	public static int COPILOT = 1;
+	public static int CONTROL_PANEL = 2;
 	
 	// Set CAN_Jaguar Ports
 	public static int CAN_Jaguar_1 = 10;
