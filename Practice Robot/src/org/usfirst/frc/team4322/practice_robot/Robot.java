@@ -1,7 +1,13 @@
 
 package org.usfirst.frc.team4322.practice_robot;
 
+import org.usfirst.frc.team4322.recycleRush.CoPilotController;
+import org.usfirst.frc.team4322.recycleRush.RobotConfigFileReader;
+import org.usfirst.frc.team4322.recycleRush.RobotMap;
+
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -15,8 +21,38 @@ public class Robot extends IterativeRobot {
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
+	
+	private boolean disabledBegin = false;
+	private boolean autoBegin = false;
+	private boolean teleBegin = false;
+	private boolean testBegin = false;
+	private boolean resetPressed = false;
+	private boolean matchRecord = false;
+	
     public void robotInit() {
+    	
+    	RobotDriveBase.getInstance().initRobotDrive();
+    	SmartDashboard.putString("Last Robot Build Time", RobotMap.LAST_BUILD_TIME);
 
+    }
+    
+    @Override
+	public void disabledInit(){
+		disabledBegin = false;
+	}
+    
+    @Override
+	public void disabledPeriodic(){
+    	
+    	if (!disabledBegin) disabledBegin = true;
+    	if(DriverStation.getInstance().isFMSAttached() && !matchRecord) matchRecord = true;
+    	
+    	if(CoPilotController.getInstance().getReloadConfigButton())
+			{
+				if(!resetPressed) resetPressed = true;
+				else resetPressed = false;
+			}
+    	
     }
 
     /**
@@ -30,6 +66,9 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
+    	
+    	if (!teleBegin) teleBegin = true;
+    	RobotDriveBase.getInstance().runTeleOp();
         
     }
     
