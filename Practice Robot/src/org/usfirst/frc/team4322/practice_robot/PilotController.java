@@ -14,7 +14,7 @@ public class PilotController {
 	 * Strafing will be right stick X axis
 	 */
 	// TODO: This value could be selected in a configuration file or using a SmartDashboard selector
-	public boolean useAlternateDriveProfile = true; // Seth's preference
+	public boolean useAlternateDriveProfile = false; // Seth's preference
     
 	public static PilotController getInstance()
 	{
