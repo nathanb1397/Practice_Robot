@@ -70,7 +70,8 @@ public class RobotDriveBase {
     // Periodic code for teleop mode should go here. This method is called ~50x per second.
     public void runTeleOp() {
     	
-    	robotDrive.arcadeDrive(PilotController.getInstance().getDriveBaseThrottleStick(),  PilotController.getInstance().getDriveBaseSteeringStick());;
+    	// Robot Drive in Arcade is set with the "throttle" and "steering" from the controller being used in that order.
+    	robotDrive.arcadeDrive(PilotController.getInstance().throttleStick(),  PilotController.getInstance().steeringStick());;
     	
     }
     

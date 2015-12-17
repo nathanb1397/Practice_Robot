@@ -13,8 +13,6 @@ public class PilotController {
 	 * Throttle will be right stick Y axis
 	 * Strafing will be right stick X axis
 	 */
-	// TODO: This value could be selected in a configuration file or using a SmartDashboard selector
-	public boolean useAlternateDriveProfile = false; // Seth's preference
     
 	public static PilotController getInstance()
 	{
@@ -26,82 +24,17 @@ public class PilotController {
 		return _instance;
 	}
 	
-	public boolean getResetGyroButton()
-	{
-		return controller.getAButton();
-	}
-
-	public double getDriveBaseStrafingStick()
-	{
-		if(useAlternateDriveProfile)
-		{
-			return controller.getX(Hand.kRight);
-		}
-		else
-		{
-			return controller.getX(Hand.kLeft);
-		}
-	}
-	public double getDriveBaseSteeringStick()
-	{
-		if(useAlternateDriveProfile)
-		{
-			return controller.getX(Hand.kLeft);
-		}
-		else
-		{
-			return controller.getX(Hand.kRight);
-		}
-	}
-	public double getDriveBaseThrottleStick()
-	{
-		if(useAlternateDriveProfile)
-		{
-			return controller.getY(Hand.kRight);
-		}
-		else
-		{
-			return controller.getY(Hand.kLeft);
-		}
+	// Get values from left Xbox One controller stick and set to throttle value.
+	public double throttleStick(){
+		
+		return controller.getY(Hand.kLeft);
 	}
 	
-	
-	public boolean getDualRateButton()
-	{
-		return controller.getBumper(Hand.kRight);
+	// Get values from right Xbox One controller stick and set to throttle value.
+	public double steeringStick(){
+		
+		return controller.getX(Hand.kRight);
+		
 	}
-	public boolean getSlideDriveLiftButton()
-	{
-		return controller.getBumper(Hand.kLeft);
-	}
-	
-	
-	public boolean getAutoAlignButton()
-	{
-		return controller.getYButton();
-	}
-	public boolean getQuickAutoAlignButton()
-	{
-		return controller.getBButton();
-	}
-	public boolean getDriveAndAutoLiftButton()
-	{
-		return controller.getXButton();
-	}
-
-	public void setUseAlternateDriveProfile(boolean useAlternateDriveProfile)
-	{
-		this.useAlternateDriveProfile = useAlternateDriveProfile;
-	}
-	
-	
-	
-	public boolean getBuddyDriverTransferButton()
-	{
-		isPilotDriving = false; //CoPilot is driving now
-		useAlternateDriveProfile = false; // Steven's preference
-		return controller.getTrigger(Hand.kRight);
-	}
-	
 	
 }
