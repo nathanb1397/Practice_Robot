@@ -1,4 +1,3 @@
-
 package org.usfirst.frc.team4322.practice_robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
