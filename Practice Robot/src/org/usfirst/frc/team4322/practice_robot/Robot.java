@@ -27,7 +27,7 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
     	
     	RobotDriveBase.getInstance().initRobotDrive();
-    	SmartDashboard.putString("Last Robot Build Time", RobotMap.LAST_BUILD_TIME);
+    	//SmartDashboard.putString("Last Robot Build Time", RobotMap.LAST_BUILD_TIME);
 
     }
     
