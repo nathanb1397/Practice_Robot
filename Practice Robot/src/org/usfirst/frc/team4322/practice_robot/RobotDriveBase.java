@@ -71,7 +71,7 @@ public class RobotDriveBase {
     public void runTeleOp() {
     	
     	// Robot Drive in Arcade is set with the "throttle" and "steering" from the controller being used in that order.
-    	robotDrive.arcadeDrive(PilotController.getInstance().throttleStick(),  PilotController.getInstance().steeringStick());;
+    	robotDrive.arcadeDrive(PilotController.getInstance().throttleStick(),  PilotController.getInstance().steeringStick());
     	
     }
     
