@@ -19,10 +19,10 @@ public class Robot extends IterativeRobot {
      */
 	
 	private boolean disabledBegin = false;
-	private boolean autoBegin = false;
+	//private boolean autoBegin = false;
 	private boolean teleBegin = false;
-	private boolean testBegin = false;
-	private boolean resetPressed = false;
+	//private boolean testBegin = false;
+	//private boolean resetPressed = false;
 	private boolean matchRecord = false;
 	
     public void robotInit() {
@@ -42,13 +42,6 @@ public class Robot extends IterativeRobot {
     	
     	if (!disabledBegin) disabledBegin = true;
     	if(DriverStation.getInstance().isFMSAttached() && !matchRecord) matchRecord = true;
-    	
-    	if(CoPilotController.getInstance().getReloadConfigButton())
-			{
-				if(!resetPressed) resetPressed = true;
-				else resetPressed = false;
-			}
-    	
     }
 
     /**
