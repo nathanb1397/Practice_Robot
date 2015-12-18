@@ -1,19 +1,22 @@
 package org.usfirst.frc.team4322.practice_robot;
 
-import java.io.IOException;
-import java.util.jar.JarFile;
+//import java.io.IOException;
+//import java.util.jar.JarFile;
 
 public class RobotMap {
 	
 	// Create a String with the Last Build Time of Code
-	public static String LAST_BUILD_TIME;
-	static{
-		try {
-			LAST_BUILD_TIME = new JarFile(RobotMap.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getManifest().getMainAttributes().getValue("Build-Time");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+	
+	public static String LAST_BUILD_TIME = "December 18, 2015; 8:30am";
+	
+//	public static String LAST_BUILD_TIME;
+//	static{
+//		try {
+//			LAST_BUILD_TIME = new JarFile(RobotMap.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getManifest().getMainAttributes().getValue("Build-Time");
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//	}
 	
 	// Set Joystick Ports for Drive Station
 	public static int PILOT = 0;
