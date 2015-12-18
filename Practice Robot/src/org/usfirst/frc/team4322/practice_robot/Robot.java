@@ -58,6 +58,9 @@ public class Robot extends IterativeRobot {
     	if (!teleBegin) teleBegin = true;
     	RobotDriveBase.getInstance().runTeleOp();
         
+    	// Write controller values to SmartDashboard
+    	SmartDashboard.putNumber("Left Stick; Y-Axis", PilotController.getInstance().throttleStick());
+    	SmartDashboard.putNumber("Left Stick; Y-Axis", PilotController.getInstance().steeringStick());
     }
     
     /**
