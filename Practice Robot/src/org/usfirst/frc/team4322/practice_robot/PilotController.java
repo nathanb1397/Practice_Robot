@@ -27,13 +27,16 @@ public class PilotController {
 	// Get values from left Xbox One controller stick and set to throttle value.
 	public double throttleStick(){
 		
-		return controller.getX(Hand.kRight);
+		//return controller.getX(Hand.kRight);
+		return controller.getY(Hand.kLeft);
+		
 	}
 	
 	// Get values from right Xbox One controller stick and set to throttle value.
 	public double steeringStick(){
 		
-		return controller.getY(Hand.kLeft);
+		//return controller.getY(Hand.kLeft);
+		return controller.getX(Hand.kRight);
 		
 	}
 	

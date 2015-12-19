@@ -9,19 +9,8 @@ public class RobotMap {
 	
 	public static String LAST_BUILD_TIME = "December 18, 2015; 8:30am";
 	
-//	public static String LAST_BUILD_TIME;
-//	static{
-//		try {
-//			LAST_BUILD_TIME = new JarFile(RobotMap.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getManifest().getMainAttributes().getValue("Build-Time");
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//	}
-	
 	// Set Joystick Ports for Drive Station
 	public static int PILOT = 0;
-	public static int COPILOT = 1;
-	public static int CONTROL_PANEL = 2;
 	
 	// Set CAN_Jaguar Ports
 	public static int CAN_Jaguar_1 = 10;
