@@ -19,7 +19,7 @@ public class Robot extends IterativeRobot {
 	
 	private boolean disabledBegin = false;
 	//private boolean autoBegin = false;
-	private boolean teleBegin = false;
+	//private boolean teleBegin = false;
 	//private boolean testBegin = false;
 	//private boolean resetPressed = false;
 	private boolean matchRecord = false;
@@ -27,8 +27,9 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
     	
     	RobotDriveBase.getInstance().initRobotDrive();
-    	SmartDashboard.putString("Last Robot Build Time", RobotMap.LAST_BUILD_TIME);
-    	SmartDashboard.putString("Code Author", RobotMap.CODE_AUTHOR);
+    	SmartDashboard.putString("Last Robot Build Time: ", RobotMap.LAST_BUILD_TIME);
+    	SmartDashboard.putString("Code Author: ", RobotMap.CODE_AUTHOR);
+    	SmartDashboard.putString("Robot Name: ", RobotMap.ROBOT_NAME);
 
     }
     
@@ -56,12 +57,8 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
     	
-    	if (!teleBegin) teleBegin = true;
     	RobotDriveBase.getInstance().runTeleOp();
         
-    	// Write controller values to SmartDashboard
-    	SmartDashboard.putNumber("throttleStick", PilotController.getInstance().throttleStick());
-    	SmartDashboard.putNumber("steeringStick", PilotController.getInstance().steeringStick());
     }
     
     /**

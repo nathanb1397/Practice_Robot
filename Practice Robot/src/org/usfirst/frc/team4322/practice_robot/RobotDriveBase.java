@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4322.practice_robot;
 
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RobotDriveBase {
 
@@ -67,8 +68,23 @@ public class RobotDriveBase {
     // Periodic code for teleop mode should go here. This method is called ~50x per second.
     public void runTeleOp()
     {	
-    	// Robot Drive in Arcade is set with the "throttle" and "steering" from the controller being used in that order.
-    	robotDrive.arcadeDrive(PilotController.getInstance().throttleStick(),  PilotController.getInstance().steeringStick());
+    	
+    	// Write controller values to SmartDashboard
+    	SmartDashboard.putNumber("throttleStick: ", PilotController.getInstance().throttleStick());
+    	SmartDashboard.putNumber("steeringStick: ", PilotController.getInstance().steeringStick());
+    	
+    	// Add power limit
+    	double steeringValue = PilotController.getInstance().steeringStick() * RobotMap.POWER_LIMIT;
+    	double throttleValue = PilotController.getInstance().throttleStick() * RobotMap.POWER_LIMIT;
+    	
+    	// Write throttle values to SmartDashboard
+    	SmartDashboard.putNumber("throttleValue: ", throttleValue);
+    	SmartDashboard.putNumber("steeringValue: ", steeringValue);
+
+    	
+    	// WPI is broken, throttle and steering is reversed from documentation
+    	// Robot Drive in Arcade is set with the "steering" and "throttle" from the controller being used in that order.
+    	robotDrive.arcadeDrive(steeringValue,  throttleValue);
     	
     }
     

@@ -30,12 +30,12 @@ public class XboxOneController extends GenericHID
          * The integer value representing this enumeration
          */
         public final int value;
-        private static final int kLeftX_val = 5;
-        private static final int kLeftY_val = 4;
+        private static final int kLeftX_val = 0;
+        private static final int kLeftY_val = 1;
         private static final int kLeftTrigger_val = 2;
         private static final int kRightTrigger_val = 3;
-        private static final int kRightX_val = 1;
-        private static final int kRightY_val = 0;
+        private static final int kRightX_val = 4;
+        private static final int kRightY_val = 5;
 
         private AxisType(int value)
         {

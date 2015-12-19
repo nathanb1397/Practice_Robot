@@ -7,8 +7,9 @@ public class RobotMap {
 	
 	// Create a String with the Last Build Time of Code
 	
-	public static String LAST_BUILD_TIME = "December 18, 2015; 8:30am";
+	public static String LAST_BUILD_TIME = "December 19, 2015; 2pm";
 	public static String CODE_AUTHOR = "Nathan Baugh";
+	public static String ROBOT_NAME = "null";
 	
 	// Set Joystick Ports for Drive Station
 	public static int PILOT = 0;
@@ -16,5 +17,8 @@ public class RobotMap {
 	// Set CAN_Jaguar Ports
 	public static int CAN_Jaguar_1 = 10;
 	public static int CAN_Jaguar_2 = 11;
+	
+	// Drive base Variables
+	public static double POWER_LIMIT = 0.8;
 
 }
