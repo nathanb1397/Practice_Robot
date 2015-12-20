@@ -1,6 +1,5 @@
 package org.usfirst.frc.team4322.practice_robot;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -17,12 +16,12 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
 	
-	private boolean disabledBegin = false;
+	//private boolean disabledBegin = false;
 	//private boolean autoBegin = false;
 	//private boolean teleBegin = false;
 	//private boolean testBegin = false;
 	//private boolean resetPressed = false;
-	private boolean matchRecord = false;
+	//private boolean matchRecord = false;
 	
     public void robotInit() {
     	
@@ -35,14 +34,12 @@ public class Robot extends IterativeRobot {
     
     @Override
 	public void disabledInit(){
-		disabledBegin = false;
+    	
 	}
     
     @Override
 	public void disabledPeriodic(){
     	
-    	if (!disabledBegin) disabledBegin = true;
-    	if(DriverStation.getInstance().isFMSAttached() && !matchRecord) matchRecord = true;
     }
 
     /**
