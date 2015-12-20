@@ -1,4 +1,3 @@
-
 package org.usfirst.frc.team4322.practice_robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -20,7 +19,7 @@ public class Robot extends IterativeRobot {
 	
 	private boolean disabledBegin = false;
 	//private boolean autoBegin = false;
-	private boolean teleBegin = false;
+	//private boolean teleBegin = false;
 	//private boolean testBegin = false;
 	//private boolean resetPressed = false;
 	private boolean matchRecord = false;
@@ -28,7 +27,9 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
     	
     	RobotDriveBase.getInstance().initRobotDrive();
-    	SmartDashboard.putString("Last Robot Build Time", RobotMap.LAST_BUILD_TIME);
+    	SmartDashboard.putString("Last Robot Build Time: ", RobotMap.LAST_BUILD_TIME);
+    	SmartDashboard.putString("Code Author: ", RobotMap.CODE_AUTHOR);
+    	SmartDashboard.putString("Robot Name: ", RobotMap.ROBOT_NAME);
 
     }
     
@@ -56,7 +57,6 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
     	
-    	if (!teleBegin) teleBegin = true;
     	RobotDriveBase.getInstance().runTeleOp();
         
     }

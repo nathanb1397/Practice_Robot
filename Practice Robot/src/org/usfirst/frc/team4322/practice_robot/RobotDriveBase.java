@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4322.practice_robot;
 
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RobotDriveBase {
 
@@ -38,13 +39,12 @@ public class RobotDriveBase {
     
     
     // Initialize Instances (Void Operation because there are no values being returned.)
-    public void initRobotDrive() {
-    	
-    	if (pdp == null){
-    		
+    public void initRobotDrive()
+    {
+    	if (pdp == null)
+    	{
     		pdp = new PowerDistributionPanel(); // PDP CAN address must be at 0 unless otherwise specified.
     		pdp.clearStickyFaults(); // Clear any alerts/faults with PDP and initialize.
-    		
     	}
     	
     	// Initializes Jaguars and assigns their CAN address from RobotMap
@@ -53,14 +53,12 @@ public class RobotDriveBase {
     	
     	// Initializes RobotDrive instance and sets Jaguars to (Left, Right) positions
     	if (robotDrive == null) robotDrive = new RobotDrive(Jaguar_1, Jaguar_2);
-    	
     }
 	
     
-    
     // Shutsdown DriveBase by setting Drive Controllers (Jaguars, Talons, etc.) to NULL
-    public void shutdownRobotDrive() {
-    	
+    public void shutdownRobotDrive()
+    {
     	if (Jaguar_1 != null) Jaguar_1 = null;
     	if (Jaguar_2 != null) Jaguar_2 = null;
     }
@@ -68,10 +66,25 @@ public class RobotDriveBase {
     
     
     // Periodic code for teleop mode should go here. This method is called ~50x per second.
-    public void runTeleOp() {
+    public void runTeleOp()
+    {	
     	
-    	// Robot Drive in Arcade is set with the "throttle" and "steering" from the controller being used in that order.
-    	robotDrive.arcadeDrive(PilotController.getInstance().throttleStick(),  PilotController.getInstance().steeringStick());;
+    	// Write controller values to SmartDashboard
+    	SmartDashboard.putNumber("throttleStick: ", PilotController.getInstance().throttleStick());
+    	SmartDashboard.putNumber("steeringStick: ", PilotController.getInstance().steeringStick());
+    	
+    	// Add power limit
+    	double steeringValue = PilotController.getInstance().steeringStick() * RobotMap.POWER_LIMIT;
+    	double throttleValue = PilotController.getInstance().throttleStick() * RobotMap.POWER_LIMIT;
+    	
+    	// Write throttle values to SmartDashboard
+    	SmartDashboard.putNumber("throttleValue: ", throttleValue);
+    	SmartDashboard.putNumber("steeringValue: ", steeringValue);
+
+    	
+    	// WPI is broken, throttle and steering is reversed from documentation
+    	// Robot Drive in Arcade is set with the "steering" and "throttle" from the controller being used in that order.
+    	robotDrive.arcadeDrive(steeringValue,  throttleValue);
     	
     }
     

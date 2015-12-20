@@ -28,6 +28,7 @@ public class PilotController {
 	public double throttleStick(){
 		
 		return controller.getY(Hand.kLeft);
+		
 	}
 	
 	// Get values from right Xbox One controller stick and set to throttle value.
