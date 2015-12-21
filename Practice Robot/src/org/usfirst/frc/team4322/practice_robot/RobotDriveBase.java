@@ -18,6 +18,9 @@ public class RobotDriveBase {
 	// Instance for RobotDrive function from WPILib
 	private static RobotDrive robotDrive = null;
 	
+	// Instance for RangeFinder
+	private static RangeFinder rangeFinder = null;
+	
 	
 	
 	// This is the static getInstance() method that provides easy access to the RobotDriveBase singleton class.
@@ -53,6 +56,9 @@ public class RobotDriveBase {
     	
     	// Initializes RobotDrive instance and sets Jaguars to (Left, Right) positions
     	if (robotDrive == null) robotDrive = new RobotDrive(Jaguar_1, Jaguar_2);
+    	
+    	// Initializes RangeFinder instance and sets Analog channel.
+    	if (rangeFinder == null) rangeFinder = new RangeFinder(RobotMap.RANGE_FINDER_PORT);
     }
 	
     
@@ -85,6 +91,9 @@ public class RobotDriveBase {
     	// WPI is broken, throttle and steering is reversed from documentation
     	// Robot Drive in Arcade is set with the "steering" and "throttle" from the controller being used in that order.
     	robotDrive.arcadeDrive(steeringValue,  throttleValue);
+    	
+    	// Write range finder distance to SmartDashboard
+    	SmartDashboard.putNumber("Distance in Inches: ", rangeFinder.GetRangeInInches());
     	
     }
     
