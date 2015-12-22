@@ -20,5 +20,12 @@ public class RobotMap {
 	
 	// Drive base Variables
 	public static double POWER_LIMIT = 0.8;
+	
+	// RangeFinder analog port
+	public static int RANGE_FINDER_PORT = 0;
+	
+	// Gyro analog port
+	public static int GYRO_PORT = 1;
+	public static int GYRO_TEMP_PORT = 2;
 
 }

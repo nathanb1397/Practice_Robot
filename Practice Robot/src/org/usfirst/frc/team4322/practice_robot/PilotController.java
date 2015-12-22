@@ -38,4 +38,8 @@ public class PilotController {
 		
 	}
 	
+	public boolean stateSwitchingButton()
+	{
+			return controller.getXButton();
+	}
 }
