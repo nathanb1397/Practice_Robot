@@ -24,7 +24,15 @@ public class RobotDriveBase {
 	// Instance for Gyro
 	private static Gyro gyro = null;
 	
+	// Drive base State Engine values
+	private static final int STATE_DRIVE_MANUAL = 0;
+	private static final int STATE_DRIVE_FORWARD_TO_DISTANCE = 1;
+	private static final int STATE_DRIVE_TURN_AROUND = 2;
+	private static final int STATE_DRIVE_BACK_TO_BEGINNING = 3;
+	private int currentState = STATE_DRIVE_MANUAL;
 	
+	// Boolean for button control
+	boolean buttonPressed = false;
 	
 	// This is the static getInstance() method that provides easy access to the RobotDriveBase singleton class.
     public static RobotDriveBase getInstance() {
@@ -93,15 +101,14 @@ public class RobotDriveBase {
     	// Write throttle values to SmartDashboard
     	SmartDashboard.putNumber("throttleValue: ", throttleValue);
     	SmartDashboard.putNumber("steeringValue: ", steeringValue);
-
-    	
-    	// WPI is broken, throttle and steering is reversed from documentation
-    	// Robot Drive in Arcade is set with the "steering" and "throttle" from the controller being used in that order.
-    	robotDrive.arcadeDrive(steeringValue,  throttleValue);
     	
     	// Write range finder distance to SmartDashboard
     	SmartDashboard.putNumber("Distance in Inches: ", rangeFinder.GetRangeInInches());
     	SmartDashboard.putNumber("Sensor Voltage: ", rangeFinder.GetVoltage());
+    	
+    	// Add state to SmartDashboard
+    	if (currentState == STATE_DRIVE_MANUAL) SmartDashboard.putString("State: ", "STATE_DRIVE_MANUAL");
+    	else if (currentState == STATE_DRIVE_FORWARD_TO_DISTANCE) SmartDashboard.putString("State: ", "STATE_DRIVE_FORWARD_TO_DISTANCE");
     	
     	// Get RAW gyro angle
     	double gyroAngle = gyro.getAngle();
@@ -112,6 +119,68 @@ public class RobotDriveBase {
     	
     	// Write range finder distance to SmartDashboard
     	SmartDashboard.putNumber("Gyro Angle: ", gyroAngle);
+    	
+    	// Monitor the button for changing states
+    	if(PilotController.getInstance().stateSwitchingButton())
+    	{
+    		// This code runs only ONCE right when the button is first pressed
+    		if(!buttonPressed)
+    		{
+    			if(currentState == STATE_DRIVE_MANUAL)
+    			{
+    				currentState = STATE_DRIVE_FORWARD_TO_DISTANCE;
+    			}
+    			else
+    			{
+    				currentState = STATE_DRIVE_MANUAL;
+    			}
+    		}
+    		// Help us not process this button press 50 times per second
+    		buttonPressed = true;
+    	}
+    	else
+    	{
+    		// Thanks for letting go of the button,
+    		// Now, you can press it again.
+    		buttonPressed = false;
+    	}
+
+
+    	// Run the STATE ENGINE
+    	switch(currentState)
+    	{
+    		case STATE_DRIVE_MANUAL:
+    	    	// WPI is broken, throttle and steering is reversed from documentation
+    	    	// Robot Drive in Arcade is set with the "steering" and "throttle" from the controller being used in that order.
+    	    	robotDrive.arcadeDrive(steeringValue,  throttleValue);
+    			break;
+
+    		case STATE_DRIVE_FORWARD_TO_DISTANCE:
+    			// Monitor the range finder and drive forward until we are within 36" of the target
+    			if(rangeFinder.GetRangeInInches() > 36)
+    			{
+    				// We need to keep driving straight forward until we are in range
+        	    	robotDrive.arcadeDrive(0.0,  -0.6);
+    			}
+    			else
+    			{
+    				// Stop the drive base and change states to manual mode
+        	    	robotDrive.arcadeDrive(0.0,  0.0);
+        	    	currentState = STATE_DRIVE_MANUAL;
+    			}
+    			break;
+    		
+    		case STATE_DRIVE_TURN_AROUND:
+    			break;
+
+    		case STATE_DRIVE_BACK_TO_BEGINNING:
+    			break;
+    	
+    		default:
+    			currentState = STATE_DRIVE_MANUAL;
+    			break;
+    	}
+
     }
     
 }
