@@ -21,6 +21,9 @@ public class RobotDriveBase {
 	// Instance for RangeFinder
 	private static RangeFinder rangeFinder = null;
 	
+	// Instance for Gyro
+	private static Gyro gyro = null;
+	
 	
 	
 	// This is the static getInstance() method that provides easy access to the RobotDriveBase singleton class.
@@ -59,6 +62,10 @@ public class RobotDriveBase {
     	
     	// Initializes RangeFinder instance and sets Analog channel.
     	if (rangeFinder == null) rangeFinder = new RangeFinder(RobotMap.RANGE_FINDER_PORT);
+    	
+    	// Initializes RangeFinder instance and sets Analog channel.
+    	if (gyro == null) gyro = new Gyro(RobotMap.GYRO_PORT);
+    	gyro.reset();
     }
 	
     
@@ -94,7 +101,17 @@ public class RobotDriveBase {
     	
     	// Write range finder distance to SmartDashboard
     	SmartDashboard.putNumber("Distance in Inches: ", rangeFinder.GetRangeInInches());
+    	SmartDashboard.putNumber("Sensor Voltage: ", rangeFinder.GetVoltage());
     	
+    	// Get RAW gyro angle
+    	double gyroAngle = gyro.getAngle();
+    	// Make gyro angle a positive number, regardless of turn direction
+    	gyroAngle = Math.abs(gyroAngle);
+    	// Force gyro angle to output within 360 degrees
+    	gyroAngle = gyroAngle % 360;
+    	
+    	// Write range finder distance to SmartDashboard
+    	SmartDashboard.putNumber("Gyro Angle: ", gyroAngle);
     }
     
 }

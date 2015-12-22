@@ -23,5 +23,9 @@ public class RobotMap {
 	
 	// RangeFinder analog port
 	public static int RANGE_FINDER_PORT = 0;
+	
+	// Gyro analog port
+	public static int GYRO_PORT = 1;
+	public static int GYRO_TEMP_PORT = 2;
 
 }
