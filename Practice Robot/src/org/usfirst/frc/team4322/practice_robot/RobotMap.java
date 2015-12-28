@@ -8,8 +8,8 @@ public class RobotMap {
 	// Create a String with the Last Build Time of Code
 	
 	public static String LAST_BUILD_TIME = "December 19, 2015; 2pm";
-	public static String CODE_AUTHOR = "Nathan Baugh";
-	public static String ROBOT_NAME = "null";
+	public static String CODE_AUTHOR = "Jay Trang";
+	public static String ROBOT_NAME = "Baymax";
 	
 	// Set Joystick Ports for Drive Station
 	public static int PILOT = 0;
