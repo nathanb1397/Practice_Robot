@@ -3,10 +3,13 @@ package org.usfirst.frc.team4322.practice_robot;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class RobotDriveBase {
+public class RobotDriveBase implements PIDSource, PIDOutput {
 
 	// Instance for this Singleton Class
 	private static RobotDriveBase _instance = null;
+	
+	// Instance for DistancePID class
+	private DistancePID distancePID = null;
 	
 	// Instance for Power Distribution Panel
 	private static PowerDistributionPanel pdp = null;
@@ -51,7 +54,31 @@ public class RobotDriveBase {
         
     }
     
+    public void initAutonomous()
+    {
+    	if(distancePID == null)
+    	{
+    		// Create an instance of DistancePID called distancePID
+    		// Arguments are ( P , I , D , source (looks for pidGet in THIS class), output (looks for pidWrite in THIS class) ) 
+    		distancePID = new DistancePID(0.5, 0.5, 0.1, this, this);
+    	}
+    	// Set PID setpoint to 36 inches.
+    	distancePID.setSetpoint(36);
+    	// Set PID tollerance range.
+    	distancePID.setPercentTolerance(2.0);
+    	// Set minimum and maximum output of the PID controller
+    	distancePID.setOutputRange(-0.8, 0.8);
+    	// Begin running the PID controller.
+    	distancePID.enable();
+    }
     
+    public void runAutonomous()
+    {
+    	if(distancePID.onTarget())
+    	{
+    		distancePID.disable();
+    	}
+    }
     
     // Initialize Instances (Void Operation because there are no values being returned.)
     public void initRobotDrive()
@@ -212,5 +239,21 @@ public class RobotDriveBase {
     	}
 
     }
+
+
+
+	@Override
+	public void pidWrite(double output) {
+		// TODO Auto-generated method stub
+		robotDrive.arcadeDrive(0, (output * -1));
+	}
+
+
+
+	@Override
+	public double pidGet() {
+		// TODO Auto-generated method stub
+		return rangeFinder.GetRangeInInches();
+	}
     
 }

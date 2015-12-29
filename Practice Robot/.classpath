@@ -4,7 +4,11 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="C:/Users/Nathan Baugh/wpilib/java/current/lib/NetworkTables.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Nathan Baugh/wpilib/java/current/lib/NetworkTables-sources.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Nathan Baugh/wpilib/java/current/lib/WPILib.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Nathan Baugh/wpilib/java/current/lib/WPILib.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/C:/Users/Nathan%20Baugh/wpilib/java/current/javadoc/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="C:/Users/Nathan Baugh/wpilib/java/current/lib/WPILib-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
