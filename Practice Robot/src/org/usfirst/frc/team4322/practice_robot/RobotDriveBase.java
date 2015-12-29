@@ -33,6 +33,7 @@ public class RobotDriveBase {
 	
 	// Boolean for button control
 	boolean buttonPressed = false;
+	boolean secondTry = false;
 	
 	// This is the static getInstance() method that provides easy access to the RobotDriveBase singleton class.
     public static RobotDriveBase getInstance() {
@@ -85,6 +86,12 @@ public class RobotDriveBase {
     }
     
     
+    public void initTeleOp()
+    {
+    	gyro.reset();
+    }
+    
+    
     
     // Periodic code for teleop mode should go here. This method is called ~50x per second.
     public void runTeleOp()
@@ -109,6 +116,8 @@ public class RobotDriveBase {
     	// Add state to SmartDashboard
     	if (currentState == STATE_DRIVE_MANUAL) SmartDashboard.putString("State: ", "STATE_DRIVE_MANUAL");
     	else if (currentState == STATE_DRIVE_FORWARD_TO_DISTANCE) SmartDashboard.putString("State: ", "STATE_DRIVE_FORWARD_TO_DISTANCE");
+    	else if (currentState == STATE_DRIVE_TURN_AROUND) SmartDashboard.putString("State: ", "STATE_DRIVE_TURN_AROUND");
+
     	
     	// Get RAW gyro angle
     	double gyroAngle = gyro.getAngle();
@@ -157,20 +166,41 @@ public class RobotDriveBase {
 
     		case STATE_DRIVE_FORWARD_TO_DISTANCE:
     			// Monitor the range finder and drive forward until we are within 36" of the target
-    			if(rangeFinder.GetRangeInInches() > 36)
+    			if(rangeFinder.GetRangeInInches() > (36 + 10))
     			{
     				// We need to keep driving straight forward until we are in range
-        	    	robotDrive.arcadeDrive(0.0,  -0.6);
+        	    	robotDrive.arcadeDrive(0.0,  -0.7);
     			}
     			else
     			{
     				// Stop the drive base and change states to manual mode
         	    	robotDrive.arcadeDrive(0.0,  0.0);
-        	    	currentState = STATE_DRIVE_MANUAL;
+        	    	gyro.reset();
+        	    	currentState = STATE_DRIVE_TURN_AROUND;
     			}
     			break;
     		
     		case STATE_DRIVE_TURN_AROUND:
+    			// Monitor the angle of the gryo
+    			if(gyroAngle < (180 - 20))
+    			{
+    				// We need to keep driving straight forward until we are in range
+        	    	if (!secondTry)
+        	    	{
+        	    		robotDrive.arcadeDrive(0.7,  0.0);
+        	   		}
+        	    	else
+        	    	{
+        	    		robotDrive.arcadeDrive(-0.7,  0.0);
+        	    	}
+    			}
+    			else
+    			{
+    				// Stop the drive base and change states to manual mode
+        	    	robotDrive.arcadeDrive(0.0,  0.0);
+        	    	secondTry = !secondTry;
+        	    	currentState = STATE_DRIVE_FORWARD_TO_DISTANCE;
+    			}
     			break;
 
     		case STATE_DRIVE_BACK_TO_BEGINNING:

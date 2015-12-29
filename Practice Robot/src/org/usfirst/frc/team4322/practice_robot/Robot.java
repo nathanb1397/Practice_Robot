@@ -52,7 +52,11 @@ public class Robot extends IterativeRobot {
 
     }
 
-    /**
+	public void teleopInit() {
+		RobotDriveBase.getInstance().initTeleOp();
+	}
+
+	/**
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
