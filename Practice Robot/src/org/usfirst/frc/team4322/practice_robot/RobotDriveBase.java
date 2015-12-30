@@ -1,7 +1,7 @@
 package org.usfirst.frc.team4322.practice_robot;
 
 import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.*;
 
 public class RobotDriveBase implements PIDSource, PIDOutput {
 
@@ -10,6 +10,7 @@ public class RobotDriveBase implements PIDSource, PIDOutput {
 	
 	// Instance for DistancePID class
 	private DistancePID distancePID = null;
+	private int onTargetCount = 0;
 	
 	// Instance for Power Distribution Panel
 	private static PowerDistributionPanel pdp = null;
@@ -56,16 +57,30 @@ public class RobotDriveBase implements PIDSource, PIDOutput {
     
     public void initAutonomous()
     {
+    	//resets gyro to 0
+    	gyro.reset();
+    	
+    	double P = SmartDashboard.getNumber("Auto P Value: ");
+    	double I = SmartDashboard.getNumber("Auto I Value: ");
+    	double D = SmartDashboard.getNumber("Auto D Value: ");
+    	double setPoint = SmartDashboard.getNumber("PID Setpoint: ");
+    	
+    	SmartDashboard.putNumber("P Value: ", P);
+    	SmartDashboard.putNumber("I Value: ", I);
+    	SmartDashboard.putNumber("D Value: ", D);
     	if(distancePID == null)
     	{
     		// Create an instance of DistancePID called distancePID
     		// Arguments are ( P , I , D , source (looks for pidGet in THIS class), output (looks for pidWrite in THIS class) ) 
-    		distancePID = new DistancePID(0.5, 0.5, 0.1, this, this);
+    		distancePID = new DistancePID(P, I, D, this, this);
     	}
+    	distancePID.setPID(P, I, D);
     	// Set PID setpoint to 36 inches.
-    	distancePID.setSetpoint(36);
-    	// Set PID tollerance range.
-    	distancePID.setPercentTolerance(2.0);
+    	//distancePID.setSetpoint(36);
+    	// Set PID setpoint to SmartDashboard
+    	distancePID.setSetpoint(setPoint);
+    	// Set PID tolerance range.
+    	distancePID.setAbsoluteTolerance(1);
     	// Set minimum and maximum output of the PID controller
     	distancePID.setOutputRange(-0.8, 0.8);
     	// Begin running the PID controller.
@@ -74,10 +89,21 @@ public class RobotDriveBase implements PIDSource, PIDOutput {
     
     public void runAutonomous()
     {
-    	if(distancePID.onTarget())
-    	{
-    		distancePID.disable();
-    	}
+    	SmartDashboard.putNumber("PID Error: ", distancePID.getError());
+    	SmartDashboard.putBoolean("On Target: ", distancePID.onTarget());
+//    	if(distancePID.onTarget())
+//    	{
+//    		onTargetCount++;
+//    		// Since this is run 50x per second, wait for onTarget to be stable for 1 second
+//    		if(onTargetCount > 50)
+//    		{
+//    			distancePID.disable();
+//    		}
+//    	}
+//    	else
+//    	{
+//    		onTargetCount = 0;
+//    	}
     }
     
     // Initialize Instances (Void Operation because there are no values being returned.)
@@ -102,6 +128,11 @@ public class RobotDriveBase implements PIDSource, PIDOutput {
     	// Initializes RangeFinder instance and sets Analog channel.
     	if (gyro == null) gyro = new Gyro(RobotMap.GYRO_PORT);
     	gyro.reset();
+    	
+    	SmartDashboard.putNumber("Auto P Value: ", 0.005);
+    	SmartDashboard.putNumber("Auto I Value: ", 0);
+    	SmartDashboard.putNumber("Auto D Value: ", 0);
+    	SmartDashboard.putNumber("PID Setpoint: ", 180);
     }
 	
     
@@ -116,6 +147,10 @@ public class RobotDriveBase implements PIDSource, PIDOutput {
     public void initTeleOp()
     {
     	gyro.reset();
+    	if(distancePID != null && distancePID.isEnable())
+    	{
+    		distancePID.disable();
+    	}
     }
     
     
@@ -244,8 +279,23 @@ public class RobotDriveBase implements PIDSource, PIDOutput {
 
 	@Override
 	public void pidWrite(double output) {
+		// Adjust the output to be at least .3 in each direction
+		if(!distancePID.onTarget())
+		{
+			// from 0 to 1 = .4 to 1
+			if(output > 0)
+			{
+				output = output * (1-.4) + .4;
+			}
+			else 
+			{
+				output = output * (1-.4) - .4;
+			}
+			
+		}
 		// TODO Auto-generated method stub
-		robotDrive.arcadeDrive(0, (output * -1));
+		SmartDashboard.putNumber("PID Write: ", output);
+		robotDrive.arcadeDrive(output ,0);
 	}
 
 
@@ -253,7 +303,12 @@ public class RobotDriveBase implements PIDSource, PIDOutput {
 	@Override
 	public double pidGet() {
 		// TODO Auto-generated method stub
-		return rangeFinder.GetRangeInInches();
+//		double range = rangeFinder.GetRangeInInches();
+//		SmartDashboard.putNumber("PID Get: ", range);
+//		return range;
+		double angle = gyro.getAngle();
+		SmartDashboard.putNumber("PID Get: ", angle);
+		return angle;
 	}
     
 }
