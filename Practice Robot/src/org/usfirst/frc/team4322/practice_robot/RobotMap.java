@@ -7,9 +7,9 @@ public class RobotMap {
 	
 	// Create a String with the Last Build Time of Code
 	
-	public static String LAST_BUILD_TIME = "December 30, 2015; 11am";
-	public static String CODE_AUTHOR = "Nathan Baugh";
-	public static String ROBOT_NAME = "null";
+	public static String LAST_BUILD_TIME = "January 1, 2016; 1pm";
+	public static String CODE_AUTHOR = "Matthew Tu";
+	public static String ROBOT_NAME = "Pot-8-O's";
 	
 	// Set Joystick Ports for Drive Station
 	public static int PILOT = 0;
