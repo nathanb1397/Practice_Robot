@@ -309,4 +309,5 @@ public class RobotDriveBase implements PIDSource, PIDOutput {
 		double angle = gyro.getAngle();
 		SmartDashboard.putNumber("PID Get: ", angle);
 		return angle;   
+	}
 }
