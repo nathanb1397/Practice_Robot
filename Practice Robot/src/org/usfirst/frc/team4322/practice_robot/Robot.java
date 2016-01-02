@@ -45,14 +45,24 @@ public class Robot extends IterativeRobot {
     	if(DriverStation.getInstance().isFMSAttached() && !matchRecord) matchRecord = true;
     }
 
+    
+    @Override
+	public void autonomousInit() {
+		RobotDriveBase.getInstance().initAutonomous();
+	}
+
     /**
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
-
+    	RobotDriveBase.getInstance().runAutonomous();
     }
 
-    /**
+	public void teleopInit() {
+		RobotDriveBase.getInstance().initTeleOp();
+	}
+
+	/**
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
@@ -67,5 +77,4 @@ public class Robot extends IterativeRobot {
     public void testPeriodic() {
     
     }
-    
 }

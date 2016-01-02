@@ -7,7 +7,7 @@ public class RobotMap {
 	
 	// Create a String with the Last Build Time of Code
 	
-	public static String LAST_BUILD_TIME = "December 19, 2015; 2pm";
+	public static String LAST_BUILD_TIME = "December 30, 2015; 11am";
 	public static String CODE_AUTHOR = "Nathan Baugh";
 	public static String ROBOT_NAME = "null";
 	
@@ -20,5 +20,11 @@ public class RobotMap {
 	
 	// Drive base Variables
 	public static double POWER_LIMIT = 0.8;
-
+	
+	// RangeFinder analog port
+	public static int RANGE_FINDER_PORT = 0;
+	
+	// Gyro analog port
+	public static int GYRO_PORT = 1;
+	public static int GYRO_TEMP_PORT = 2;
 }
