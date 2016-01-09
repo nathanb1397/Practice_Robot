@@ -22,7 +22,7 @@ public class RobotDriveBase {
 	private static RangeFinder rangeFinder = null;
 	
 	// Instance for Gyro
-	private static Gyro gyro = null;
+	private static AnalogGyro gyro = null;
 	
 	// Drive base State Engine values
 	private static final int STATE_DRIVE_MANUAL = 0;
@@ -72,7 +72,7 @@ public class RobotDriveBase {
     	if (rangeFinder == null) rangeFinder = new RangeFinder(RobotMap.RANGE_FINDER_PORT);
     	
     	// Initializes RangeFinder instance and sets Analog channel.
-    	if (gyro == null) gyro = new Gyro(RobotMap.GYRO_PORT);
+    	if (gyro == null) gyro = new AnalogGyro(RobotMap.GYRO_PORT);
     	gyro.reset();
     }
 	
